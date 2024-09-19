@@ -1,72 +1,84 @@
-# MachineLearing-With-FPGA-and-MATLB
-n this project, I implemented linear regression and deep neural networks using Simulink and HDL Coder in MATLAB, generating HDL code for FPGA deployment on a Nexys 4 Artix-7 board. The goal was to explore hardware acceleration for efficient, real-time processing
+Here's a clear and concise `README.md` file for your project:
 
+---
 
-## Linear Regression
+# Machine Learning with FPGA and MATLAB
 
-**Understanding Linear Regression**
+## Project Overview
 
-Linear regression is a statistical method used to model the relationship between a dependent variable (y) and one or more independent variables (x1, x2, ..., xn). It assumes that the relationship can be represented by a linear equation:
+This project explores hardware acceleration for machine learning models using FPGA for efficient, real-time processing. We implemented **Linear Regression** and **Deep Neural Networks (DNN)** using **Simulink** and **HDL Coder** in **MATLAB**, generating HDL code for deployment on the Nexys 4 Artix-7 FPGA board. The goal was to evaluate performance differences between software-based execution and FPGA-based hardware acceleration.
 
-```
-y = θ0 + θ1x1 + θ2x2 + ... + θnxn
-```
+### Models Implemented
+1. **Linear Regression**: Predicting house prices using the `USAHousing.data` dataset.
+2. **Deep Neural Networks**: Implementing basic deep learning models for hardware acceleration.
 
-where:
+## Linear Regression Implementation
 
-* θ0 is the intercept term (bias or offset)
-* θ1, θ2, ..., θn are the coefficients representing the impact of each independent variable on the dependent variable
+### Steps:
+1. **Simulink Model Creation**:  
+   A Simulink model was built to simulate the behavior of a Linear Regression model. The model was designed to compute the regression coefficients (θ) using the dataset.  
+   **Equation**:  
+   \[
+   \hat{y} = X\theta
+   \]  
+   where `X` is the input data and `θ` represents the coefficients.
 
-**Vector Notation**
+2. **Data Preprocessing**:  
+   After computing the coefficients, the input data and coefficients were converted into **fixed-point** values using the custom function `ConvertToFixedPoint()`. This step is necessary to align the data with FPGA's fixed-point operations.
 
-The equation can also be expressed in vector notation:
+3. **Simulink Simulation**:  
+   The fixed-point variables were loaded directly from the MATLAB workspace into Simulink. The model output was compared with MATLAB’s simulation results and hardware outputs on the FPGA.
 
-```
-y = θ^T x
-```
+### HDL Code Generation and Deployment
 
-where:
+#### Steps:
+1. **Generating HDL Files**:
+   - Ensure you have the required add-ons in MATLAB, including **HDL Coder** and **Fixed-Point Designer**.
+   - Use the following commands to generate the HDL files:
+     ```matlab
+     checkhdl(<Simulink_Model_Name>)
+     createhdl(<Simulink_Model_Name>)
+     ```
 
-* θ is a column vector of coefficients (θ0, θ1, ..., θn)
-* x is a column vector of independent variables (1, x1, x2, ..., xn)
-* ^T denotes the transpose
+2. **FilWizard Command**:  
+   Run the `filwizard` command in MATLAB to set up the FPGA board configuration.
+   ```matlab
+   filwizard
+   ```
+   - Select the Nexys 4 Artix-7 board.
+   - Make your module the top module in the HDL code.
 
-**Finding the Optimal Parameters (θ)**
+3. **Build and Upload**:  
+   Build the project and upload the generated HDL code onto the FPGA board.
 
-The goal is to find the best values for θ that minimize the difference between predicted values (ŷ) and actual values (y). This is typically done using the squared error loss function:
+4. **Testing and Comparison**:  
+   - Connect the FPGA board to Simulink using the generated module.
+   - Use a **Scope** block to compare the hardware output with the MATLAB and Simulink simulation outputs.
 
-```
-L(ŷ(x; θ), y) = (ŷ(x; θ) - y)^2
-```
+## Requirements
 
-The cost function is the average of the loss function over all data points:
+### MATLAB Toolboxes/Add-Ons:
+- **Simulink**
+- **HDL Coder**
+- **Fixed-Point Designer**
+- **MATLAB Coder**
 
-```
-J(θ) = 1/n * Σ(L(ŷ(xi; θ), yi))
-```
+### FPGA:
+- Nexys 4 Artix-7 FPGA board (or similar)
 
-Using linear algebra, the solution for the optimal parameter vector θ is:
+## Usage Instructions
 
-```
-θ̂ = (X^TX)^-1 X^Ty
-```
+1. Clone the repository.
+2. Open MATLAB and load the Simulink model for Linear Regression or DNN.
+3. Run the `ConvertToFixedPoint()` function to process data.
+4. Use `checkhdl` and `createhdl` to generate HDL files.
+5. Run `filwizard` to set up the FPGA board and upload the HDL code.
+6. Compare the outputs from FPGA, Simulink, and MATLAB to evaluate accuracy.
 
-where:
+## Conclusion
 
-* X is the matrix of independent variables (design matrix)
-* y is the vector of dependent variables
+This project demonstrates the feasibility of using FPGAs to accelerate machine learning models like Linear Regression and Deep Neural Networks. By leveraging HDL Coder and Simulink, efficient hardware implementations were achieved, and comparisons were made between software and hardware outputs to verify accuracy and performance.
 
-**Steps Involved:**
+---
 
-1. **Collect data:** Gather a dataset with the dependent and independent variables.
-2. **Prepare data:** Clean, preprocess, and possibly normalize the data.
-3. **Create the design matrix:** Construct the matrix X by including the independent variables and an extra column of 1s for the intercept term.
-4. **Calculate the optimal parameters:** Use the equation θ̂ = (X^TX)^-1 X^Ty to compute the coefficients.
-5. **Make predictions:** Use the trained model (with the estimated coefficients) to predict the dependent variable for new input data.
-
-**Key Points:**
-
-* Linear regression assumes a linear relationship between the variables.
-* The squared error loss function is commonly used to measure the model's performance.
-* The optimal parameters can be found using linear algebra.
-* The model can be used for prediction and understanding the relationship between variables.
+This `README.md` file provides a clear, concise overview of the project with instructions on how to set up and run it.
