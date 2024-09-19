@@ -1,0 +1,5 @@
+DNN/DNNModel/Hidden Layer2 --> Hidden_Layer2
+DNN/DNNModel/HiddenLayer1 --> HiddenLayer1
+DNN/DNNModel/MATLAB Function --> MATLAB_Function
+DNN/DNNModel/OutputLayer --> OutputLayer
+DNN/DNNModel --> DNNModel
