@@ -40,7 +40,7 @@ The sigmoid function, defined as:
 ```
 σ(x) = 1 / (1 + e^(-x))
 ```
-![Sigmoid Function Approximation](Fig/sigmod_app.jpg)
+![Sigmoid Function Approximation](Fig/Sigmod_app.jpg)
 is approximated using a piecewise linear model.
 
 ### Tanh Function Approximation
@@ -49,7 +49,7 @@ The hyperbolic tangent function, defined as:
 ```
 tanh(x) = (e^x - e^(-x)) / (e^x + e^(-x))
 ```
-![Tanh Function Approximation](Fig/tanh_appox.jpg)
+![Tanh Function Approximation](Fig/thanh_appox.jpg)
 is similarly approximated using a piecewise linear approach.
 
 Both approximations use the following piecewise linear model:
